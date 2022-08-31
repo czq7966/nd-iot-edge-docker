@@ -1,0 +1,1 @@
+docker build -f Dockerfile_common -t d-iot-edge:0 .
