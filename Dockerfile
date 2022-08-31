@@ -1,11 +1,8 @@
 FROM koenkk/zigbee2mqtt:1.22.0
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
-    && echo 'http://mirrors.aliyun.com/alpine/v3.6/main' >> /etc/apk/repositories \
-    && echo 'http://mirrors.aliyun.com/alpine/v3.6/community' >> /etc/apk/repositories
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories 
 
-RUN apk add --no-cache --virtual .buildtools sudo tzdata eudev tini zlib-dev pcre-dev make gcc g++ python3 linux-headers git 
-RUN apk add mongodb
+RUN apk add --no-cache --virtual .buildtools sudo tzdata eudev tini zlib-dev pcre-dev make gcc g++ python3 linux-headers git  
 
 RUN rm -f /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
