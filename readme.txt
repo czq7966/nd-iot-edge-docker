@@ -1,8 +1,10 @@
 服务 docker 镜像 生成命令：
-#docker build -t registry.101.com/60b603a0d9419c00107e378d/nd-iot-services-amd64:0.1.3 .
-docker build -t registry.101.com/62f36682a30e9400102f4f23/nd-iot-services-amd64:21 .
-docker save -o nd-iot-services-amd64.21 registry.101.com/62f36682a30e9400102f4f23/nd-iot-services-amd64:21
-scp nd-iot-services-amd64.21 root@172.24.135.38:/data/.   hyperledger123
+#docker build -t registry.101.com/60b603a0d9419c00107e378d/nd-iot-edge-amd64:0.1.3 .
+docker build -t registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:22 .
+
+docker tag nd-iot-edge:22 registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:22 
+docker save -o nd-iot-edge-amd64.22 registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:22 
+scp nd-iot-edge-amd64.22 root@172.24.135.38:/data/.   hyperledger123
 
 docker build -t registry.101.com/60b603a0d9419c00107e378d/nd-iot-services-armv7:0.0.2 .
 docker build -t d-iot-services-armv7:0 .
@@ -131,7 +133,7 @@ docker run -it -p 80:8080  -e IOT_CODE_BRANCH=dev -e IOT_ENABLE_AUTO_UPDATE=0  -
 //test租户
 docker run -it -p 80:8080  -e IOT_CODE_BRANCH=dev -e IOT_ENABLE_AUTO_UPDATE=0  -e IOT_ENABLE_NGINX=1  -e IOT_ENABLE_MQTT=1 -e IOT_ENABLE_EDG=1 -e IOT_APP_ID=ndiot -e IOT_EDG_ID=ndiot-edg-test nd-iot-services-amd64:23
 
-docker run -it -p 80:8080  -e IOT_CODE_BRANCH=dev -e IOT_ENABLE_AUTO_UPDATE=0  -e IOT_ENABLE_NGINX=1  -e IOT_ENABLE_MQTT=1 -e IOT_ENABLE_EDG=1 -e IOT_APP_ID=ndiot -e IOT_EDG_ID=ndiot-edg-test nd-iot-edge:21
+docker run -it -p 80:8080  -e IOT_CODE_BRANCH=dev -e IOT_ENABLE_AUTO_UPDATE=0  -e IOT_ENABLE_NGINX=1  -e IOT_ENABLE_MQTT=1 -e IOT_ENABLE_EDG=1 -e IOT_APP_ID=ndiot -e IOT_EDG_ID=ndiot-edg-test nd-iot-edge:22
 
 
 //ArmBian 安装Docker

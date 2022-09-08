@@ -19,8 +19,7 @@ RUN rm -f /etc/localtime \
     && chmod 777 -R /data/db \
     && echo "iot    ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && echo "%sudo  ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers \
-    && echo "root:123456" | chpasswd \
-    && usermod -aG dialout iot
+    && echo "root:123456" | chpasswd 
 
 USER iot     
 
@@ -40,16 +39,15 @@ RUN mkdir -p /services \
 
 # RUN mkdir -p /services \
 #     &&  cd /services \
-#     &&  cd /services \
-#     &&  git clone https://github.com/czq7966/nd-iot-edge.git nd-iot-services -b dev \
-#     &&  cd /services/nd-iot-services \
+#     &&  git clone https://github.com/czq7966/nd-iot-edge.git nd-iot-edge -b dev \
+#     &&  cd /services/nd-iot-edge \
 #     &&  npm run nd:install \
-#     &&  cd /services/nd-iot-services    
+#     &&  cd /services/nd-iot-edge    
 
 
-WORKDIR /services/nd-iot-services
+WORKDIR /services/nd-iot-edge
 
 EXPOSE 1880-1884 8080-8090 18090-18199 11880-11889 27017
 USER iot
 ENTRYPOINT []
-CMD ["npm","start"]
+CMD ["sudo", "npm","start"]
