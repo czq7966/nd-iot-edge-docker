@@ -2,7 +2,7 @@ FROM koenkk/zigbee2mqtt:1.22.0
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories 
 
-RUN apk add --no-cache --virtual .buildtools sudo tzdata eudev tini zlib-dev pcre-dev make gcc g++ python3 linux-headers git  
+RUN apk add --no-cache --virtual .buildtools sudo tzdata eudev tini zlib-dev pcre-dev make gcc g++ python3 linux-headers git shadow 
 
 RUN rm -f /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
@@ -19,7 +19,8 @@ RUN rm -f /etc/localtime \
     && chmod 777 -R /data/db \
     && echo "iot    ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && echo "%sudo  ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers \
-    && echo "root:123456" | chpasswd
+    && echo "root:123456" | chpasswd \
+    && usermod -aG dialout iot
 
 USER iot     
 
@@ -38,7 +39,6 @@ RUN mkdir -p /services \
 
 
 RUN mkdir -p /services \
-    &&  cd /services \
     &&  cd /services \
     &&  git clone https://github.com/czq7966/nd-iot-edge.git nd-iot-services -b dev \
     &&  cd /services/nd-iot-services \
