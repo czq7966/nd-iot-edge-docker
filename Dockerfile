@@ -41,12 +41,13 @@ RUN mkdir -p /services \
     &&  cd /services \
     &&  cd /services \
     &&  cd /services \
+    &&  cd /services \
+    &&  cd /services \
     &&  git clone https://github.com/czq7966/nd-iot-edge.git nd-iot-edge -b dev \
     &&  cd /services/nd-iot-edge \
     &&  npm run nd:install \
     &&  cd /services/nd-iot-edge    
 
-USER iot
 COPY ./nd-iot-edge/start.sh /services/nd-iot-edge/.  
 RUN sudo chmod 777 /services/nd-iot-edge/start.sh
 

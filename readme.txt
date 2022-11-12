@@ -1,10 +1,21 @@
 服务 docker 镜像 生成命令：
 #docker build -t registry.101.com/60b603a0d9419c00107e378d/nd-iot-edge-amd64:0.1.3 .
-docker build -t registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:22 .
+docker build -t registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:25 .
 
-docker tag nd-iot-edge:22 registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:22 
-docker save -o nd-iot-edge-amd64.22 registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:22 
-scp nd-iot-edge-amd64.22 root@172.24.135.38:/data/.   hyperledger123
+//iot-edge
+docker tag nd-iot-edge:25 registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:25 
+docker save -o nd-iot-edge-amd64.25 registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:25 
+scp nd-iot-edge-amd64.25 root@172.24.135.38:/data/.   hyperledger123
+docker load -i nd-iot-edge-amd64.25
+docker push registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:25 
+
+
+//iot-mqtt
+docker tag nd-iot-edge:25 registry.101.com/60b603a0d9419c00107e378d/nd-iot-edge-amd64:25 
+docker save -o nd-iot-edge-amd64.25 registry.101.com/60b603a0d9419c00107e378d/nd-iot-edge-amd64:25
+scp nd-iot-edge-amd64.25 root@172.24.135.38:/data/.   hyperledger123
+docker load -i nd-iot-edge-amd64.25
+docker push registry.101.com/62f36682a30e9400102f4f23/nd-iot-edge-amd64:25
 
 docker build -t registry.101.com/60b603a0d9419c00107e378d/nd-iot-services-armv7:0.0.2 .
 docker build -t d-iot-services-armv7:0 .
@@ -38,7 +49,11 @@ set IOT_CONFIG_FILE=E:/data/nd-iot-edge-gateway/docker/config.json&& set IOT_APP
 set IOT_CONFIG_FILE=E:/data/nd-iot-edge-gateway/docker/config.json&& set IOT_CODE_BRANCH=dev&& set IOT_APP_ID=ndiot&& set IOT_ENABLE_MQTT=1&& set IOT_ENABLE_DIO=1&& set IOT_ENABLE_DSP=1&& set IOT_ENABLE_EDG=1&& set IOT_ENABLE_PLF_BFY=1&& npm start
 
 //启动DIO
-set IOT_APP_ID=ndiot&& set IOT_DIO_ID=ndiot-dio-1&& set IOT_ENABLE_DIO=1&& npm start
+set IOT_APP_ID=ndiot&& set IOT_DIO_ID=ndiot-dio&& set IOT_ENABLE_DIO=1&& set IOT_CONFIG_FILE_FIRST=1&& npm start
+
+//启动LOG
+set IOT_APP_ID=ndiot&& set IOT_ENABLE_LOG=1&& npm start
+
 
 //启动PLF_BFY+PLF_NDV1+PLF_NDV2平台 + LOG
 set IOT_APP_ID=ndiot&& set IOT_PLF_ID={HOSTNAME}&& set IOT_ENABLE_PLF_NDV1=1&& set IOT_ENABLE_PLF_NDV2=1&& set IOT_ENABLE_PLF_BFY=1&& set IOT_ENABLE_LOG=1&& npm start
@@ -48,9 +63,13 @@ set IOT_APP_ID=ndiot&& set IOT_PLF_ID={HOSTNAME}&& set IOT_ENABLE_PLF_NDV1=1&& s
 set IOT_CONFIG_FILE=E:/data/nd-iot-edge-gateway/docker/config.json&& set IOT_CODE_BRANCH=dev&& set IOT_APP_ID=ndiot&& set IOT_ENABLE_MQTT=1&& set IOT_ENABLE_DSP=1&& set IOT_ENABLE_EDG=1&& set IOT_ENABLE_PLF_NDV1=1&& set IOT_ENABLE_PLF_NDV2=1&& set IOT_ENABLE_PLF_BFY=1&& npm start
 
 //启动test租户
-set IOT_APP_ID=ndiot&& set IOT_DSP_ID={HOSTNAME}&& set IOT_EDG_ID={HOSTNAME}&& set IOT_ENABLE_MQTT=1&& set IOT_ENABLE_MDB=0&& set IOT_ENABLE_EDG=1&& npm start
+set IOT_APP_ID=ndiot&& set IOT_EDG_ID=ndiot-edg-test&& set IOT_ENABLE_MQTT=1&& set IOT_ENABLE_EDG=1&& npm start
 
+//启动长乐美术馆租户: clmsg
+set IOT_APP_ID=ndiot&& set IOT_EDG_ID=ndiot-edg-clmsg&& set IOT_ENABLE_EDG=1&& npm start
 
+//启动yunqi租户
+set IOT_APP_ID=ndiot&& set IOT_EDG_ID=ndiot-edg-yunqi&& set IOT_ENABLE_EDG=1&& npm start
 
 //环境变量
 IOT_CODE_BRANCH: 代码分支，默认dev
@@ -131,9 +150,9 @@ docker run -it -p 80:8080  -e IOT_CODE_BRANCH=dev -e IOT_ENABLE_AUTO_UPDATE=0  -
 
 
 //test租户
-docker run -it -p 80:8080  -e IOT_CODE_BRANCH=dev -e IOT_ENABLE_AUTO_UPDATE=0  -e IOT_ENABLE_NGINX=1  -e IOT_ENABLE_MQTT=1 -e IOT_ENABLE_EDG=1 -e IOT_APP_ID=ndiot -e IOT_EDG_ID=ndiot-edg-test nd-iot-services-amd64:23
+docker run -it -p 80:8080  -e IOT_CODE_BRANCH=dev -e IOT_ENABLE_AUTO_UPDATE=0  -e IOT_ENABLE_NGINX=1  -e IOT_ENABLE_MQTT=1 -e IOT_ENABLE_EDG=1 -e IOT_APP_ID=ndiot -e IOT_EDG_ID=ndiot-edg-test nd-iot-services-amd64:25
 
-docker run -it -p 80:8080  -e IOT_CODE_BRANCH=dev -e IOT_ENABLE_AUTO_UPDATE=0  -e IOT_ENABLE_NGINX=1  -e IOT_ENABLE_MQTT=1 -e IOT_ENABLE_EDG=1 -e IOT_APP_ID=ndiot -e IOT_EDG_ID=ndiot-edg-test nd-iot-edge:22
+docker run -it -p 80:8080  -e IOT_CODE_BRANCH=dev -e IOT_ENABLE_AUTO_UPDATE=0  -e IOT_ENABLE_NGINX=1  -e IOT_ENABLE_MQTT=1 -e IOT_ENABLE_EDG=1 -e IOT_APP_ID=ndiot -e IOT_EDG_ID=ndiot-edg-test nd-iot-edge:25
 
 
 //ArmBian 安装Docker
