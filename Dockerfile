@@ -46,6 +46,10 @@ RUN mkdir -p /services \
     &&  cd /services \
     &&  cd /services \    
     &&  cd /services \    
+    &&  cd /services \   
+    &&  cd /services \
+    &&  cd /services \
+    &&  cd /services \
     &&  git clone https://github.com/czq7966/nd-iot-edge.git nd-iot-edge -b dev \
     &&  cd /services/nd-iot-edge \
     &&  npm run nd:install \
