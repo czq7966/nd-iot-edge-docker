@@ -1,1 +1,1 @@
-docker build -t nd-iot-edge:32 .
+docker build -t nd-iot-edge:33 .
